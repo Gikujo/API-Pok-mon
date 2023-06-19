@@ -1,0 +1,40 @@
+{
+    "cartesPokemon": [
+        {
+            "id": 0,
+            "nom": "Pikachu",
+            "type": "Électrique",
+            "imageSrc": "https://img.pokemondb.net/artwork/large/pikachu.jpg"
+        },
+        {
+            "id": 2,
+            "nom": "Carapuce",
+            "type": "Eau",
+            "imageSrc": "https://img.pokemondb.net/artwork/large/squirtle.jpg"
+        },
+        {
+            "id": 3,
+            "nom": "Carabaffe",
+            "type": "Eau",
+            "imageSrc": "https://img.pokemondb.net/artwork/large/wartortle.jpg"
+        },
+        {
+            "id": 5,
+            "nom": "Goupix",
+            "type": "Feu",
+            "imageSrc": "https://img.pokemondb.net/artwork/large/vulpix.jpg"
+        },
+        {
+            "id": 6,
+            "nom": "Feunard",
+            "type": "Feu",
+            "imageSrc": "https://img.pokemondb.net/artwork/large/ninetales.jpg"
+        },
+        {
+            "id": 9,
+            "nom": "Maccogneur",
+            "type": "Combat",
+            "imageSrc": "https://img.pokemondb.net/artwork/large/machamp.jpg"
+        }
+    ]
+}
