@@ -1,40 +1,208 @@
 {
-    "cartesPokemon": [
-        {
-            "id": 0,
-            "nom": "Pikachu",
-            "type": "Électrique",
-            "imageSrc": "https://img.pokemondb.net/artwork/large/pikachu.jpg"
-        },
-        {
-            "id": 2,
-            "nom": "Carapuce",
-            "type": "Eau",
-            "imageSrc": "https://img.pokemondb.net/artwork/large/squirtle.jpg"
-        },
-        {
-            "id": 3,
-            "nom": "Carabaffe",
-            "type": "Eau",
-            "imageSrc": "https://img.pokemondb.net/artwork/large/wartortle.jpg"
-        },
-        {
-            "id": 5,
-            "nom": "Goupix",
-            "type": "Feu",
-            "imageSrc": "https://img.pokemondb.net/artwork/large/vulpix.jpg"
-        },
-        {
-            "id": 6,
-            "nom": "Feunard",
-            "type": "Feu",
-            "imageSrc": "https://img.pokemondb.net/artwork/large/ninetales.jpg"
-        },
-        {
-            "id": 9,
-            "nom": "Maccogneur",
-            "type": "Combat",
-            "imageSrc": "https://img.pokemondb.net/artwork/large/machamp.jpg"
-        }
-    ]
+  "cartesPokemon": [
+    {
+      "id": 0,
+      "nom": "Bulbizarre",
+      "type": "Plante",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/bulbasaur.jpg"
+    },
+    {
+      "id": 1,
+      "nom": "Herbizarre",
+      "type": "Plante",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/ivysaur.jpg"
+    },
+    {
+      "id": 2,
+      "nom": "Florizarre",
+      "type": "Plante",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/venusaur.jpg"
+    },
+    {
+      "id": 3,
+      "nom": "Salamèche",
+      "type": "Feu",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/charmander.jpg"
+    },
+    {
+      "id": 4,
+      "nom": "Reptincel",
+      "type": "Feu",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/charmeleon.jpg"
+    },
+    {
+      "id": 5,
+      "nom": "Dracaufeu",
+      "type": "Feu",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/charizard.jpg"
+    },
+    {
+      "id": 6,
+      "nom": "Carapuce",
+      "type": "Eau",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/squirtle.jpg"
+    },
+    {
+      "id": 7,
+      "nom": "Carabaffe",
+      "type": "Eau",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/wartortle.jpg"
+    },
+    {
+      "id": 8,
+      "nom": "Tortank",
+      "type": "Eau",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/blastoise.jpg"
+    },
+    {
+      "id": 9,
+      "nom": "Chenipan",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/caterpie.jpg"
+    },
+    {
+      "id": 10,
+      "nom": "Chrysacier",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/metapod.jpg"
+    },
+    {
+      "id": 11,
+      "nom": "Papilusion",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/butterfree.jpg"
+    },
+    {
+      "id": 12,
+      "nom": "Aspicot",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/weedle.jpg"
+    },
+    {
+      "id": 13,
+      "nom": "Coconfort",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/kakuna.jpg"
+    },
+    {
+      "id": 14,
+      "nom": "Dardagnan",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/beedrill.jpg"
+    },
+    {
+      "id": 15,
+      "nom": "Roucool",
+      "type": "Vol",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/pidgey.jpg"
+    },
+    {
+      "id": 16,
+      "nom": "Roucoups",
+      "type": "Vol",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/pidgeotto.jpg"
+    },
+    {
+      "id": 17,
+      "nom": "Roucarnage",
+      "type": "Vol",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/pidgeot.jpg"
+    },
+    {
+      "id": 18,
+      "nom": "Rattata",
+      "type": "Normal",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/rattata.jpg"
+    },
+    {
+      "id": 19,
+      "nom": "Rattatac",
+      "type": "Normal",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/raticate.jpg"
+    },
+    {
+      "id": 20,
+      "nom": "Piafabec",
+      "type": "Vol",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/spearow.jpg"
+    },
+    {
+      "id": 21,
+      "nom": "Rapasdepic",
+      "type": "Vol",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/fearow.jpg"
+    },
+    {
+      "id": 22,
+      "nom": "Abo",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/ekans.jpg"
+    },
+    {
+      "id": 23,
+      "nom": "Arbok",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/arbok.jpg"
+    },
+    {
+      "id": 24,
+      "nom": "Pikachu",
+      "type": "Electrique",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/pikachu.jpg"
+    },
+    {
+      "id": 25,
+      "nom": "Raichu",
+      "type": "Electrique",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/raichu.jpg"
+    },
+    {
+      "id": 28,
+      "nom": "Sabelette",
+      "type": "Sol",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/sandshrew.jpg"
+    },
+    {
+      "id": 29,
+      "nom": "Sablaireau",
+      "type": "Sol",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/sandslash.jpg"
+    },
+    {
+      "id": 30,
+      "nom": "Nidoran",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/nidoran-f.jpg"
+    },
+    {
+      "id": 31,
+      "nom": "Nidorina",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/nidorina.jpg"
+    },
+    {
+      "id": 32,
+      "nom": "Nidoqueen",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/nidoqueen.jpg"
+    },
+    {
+      "id": 33,
+      "nom": "Nidoran",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/nidoran-m.jpg"
+    },
+    {
+      "id": 34,
+      "nom": "Nidorino",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/nidorino.jpg"
+    },
+    {
+      "id": 35,
+      "nom": "Nidoking",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/nidoking.jpg"
+    }
+  ]
 }

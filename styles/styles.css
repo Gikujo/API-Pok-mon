@@ -1,0 +1,9 @@
+th {
+    width: 5vw;
+    padding: 10px;
+}
+
+th img {
+    max-width: 5vw;
+    max-height: 8vw;
+}
