@@ -6,13 +6,13 @@
 // **********************************************************************************************************
 
 const express = require('express');
-const Joi = require('joi');     // Outil qui sert à tester la validité d'une entrée
+const Joi = require('joi');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 
 const app = express();
-app.use(express.json()); // Ajoute un middleware pour traiter les requêtes au format JSON
+app.use(express.json());
 app.use(cors());
 
 
@@ -31,39 +31,25 @@ app.get('/cartes', (req, res) => {
 
 // Envoyer le fichier accueil
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Envoyer le fichier CSS
 app.get('/styles', (req, res) => {
-    res.sendFile(path.join(__dirname, 'styles', 'styles.css'));
+    res.sendFile(path.join(__dirname, 'public', 'styles', 'styles.css'));
 });
 
 // Envoyer le script
 app.get('/script', (req, res) => {
-    res.sendFile(path.join(__dirname, 'script', 'main.js'));
+    res.sendFile(path.join(__dirname, 'public', 'script', 'main.js'));
 });
 
-// **********************************************************************************************************
-// ********************************************** FONCTIONS *************************************************
-// **********************************************************************************************************
-
-function verifierEntree(entree) {
-    const schema = Joi.object({
-        id: Joi.number().required(),
-        nom: Joi.string().min(3).required(),
-        type: Joi.string().min(3).required(),
-        imageSrc: Joi.string().min(10).required()
-    });
+// Envoyer la liste des Pokémons
+app.get('/typesPokemon', (req, res) => {
+    res.sendFile(path.join(__dirname, 'typesPokemon', 'typesPokemon.json'));
+});
 
 
-    let result = (schema.validate(entree));
-
-    if (result.error) {
-        // res.send(`Votre formulaire n'est pas valide.`);
-        return false;
-    }
-}
 
 // **********************************************************************************************************
 // ***************************************** AFFICHER UN POKEMON ********************************************
@@ -71,8 +57,8 @@ function verifierEntree(entree) {
 
 app.get('/cartes/:nom', (req, res) => {
 
-    fs.readFile('cartes/pokemonList.json', 'utf8', (err, data) => {
-        if (err) {
+    fs.readFile(url, 'utf8', (err, data) => {
+        if (err) {                          // -- Import du fichier JSON
             console.error('Erreur lors de la lecture du fichier JSON :', err);
             res.status(500).send("Une erreur est survenue lors de la lecture de l'objet JSON Pokémon.");
             return;
@@ -83,13 +69,13 @@ app.get('/cartes/:nom', (req, res) => {
             const pokemonData = JSON.parse(data);
             const pokemon = pokemonData.cartesPokemon.find(objet => objet.nom == nomPokemon);
 
-            if (!pokemon) {
+            if (!pokemon) {                 // Si le pokémon n'est pas dans la liste
                 res.status(404).send("Le pokémon avec ce nom n'est pas disponible.");
                 return;
-            } else {
+            } else {                        // Sinon, on renvoie le pokémon
                 res.send(pokemon);
             }
-        } catch (error) {
+        } catch (error) {                   // Si le fichier JSON n'a pas été lu
             console.error('Erreur lors de l\'analyse du fichier JSON :', error);
             res.status(500).send("Une erreur est survenue lors du traitement des données des Pokémon.");
         }
@@ -103,7 +89,7 @@ app.get('/cartes/:nom', (req, res) => {
 app.post('/cartes', (req, res) => {
 
     fs.readFile('cartes/pokemonList.json', 'utf8', (err, data) => {
-        if (err) {
+        if (err) {                          // Import du fichier JSON
             res.status(500).send("Une erreur est survenue lors de la lecture de l'objet JSON Pokémon.");
             return;
         }
@@ -111,53 +97,50 @@ app.post('/cartes', (req, res) => {
         try {
             let cartesPokemon = JSON.parse(data).cartesPokemon;
             let idNouveauPokemon;
-
+            // Attribution de l'ID du nouveau Pokémon
             if (cartesPokemon.length == 0) {
-                idNouveauPokemon = 0;
+                idNouveauPokemon = 0;       // Si c'est le premier, il prend 0
             } else {
                 idNouveauPokemon = cartesPokemon[cartesPokemon.length - 1].id + 1;
-            }
+            }                               // Sinon, on l'incrémente
 
-            let newPokemon = {
+            let newPokemon = {              // On fabrique l'objet Pokémon à comparer avec le schéma
                 "id": idNouveauPokemon,
                 "nom": req.body.nom,
                 "type": req.body.type,
                 "imageSrc": req.body.image
             };
 
-            let etat = verifierEntree(newPokemon);
-
-            if (etat == false) {
+            let etat = verifierEntree(newPokemon);// Utilisation de Joi pour valider le formulaire
+            if (etat === false) {
                 res.status(400).send(`Votre formulaire n'est pas valide`);
-                return;
-            }    // Utilisation de Joi pour valider le formulaire
+                return;                     // Si erreur, on arrête la requête
+            }
 
-            cartesPokemon.push(newPokemon);
+            cartesPokemon.push(newPokemon); // Sinon, on rajoute le nouveau Pokémon
 
-            const nouvellesDonnees = {
+            const nouvellesDonnees = {      // Création d'un nouvel objet à destination du JSON
                 "cartesPokemon": cartesPokemon
             };
-
             const nouvellesDonneesJSON = JSON.stringify(nouvellesDonnees, null, 2);
-            console.log(nouvellesDonneesJSON);
+
 
             fs.writeFile(url, nouvellesDonneesJSON, (err) => {
+                // Écrasement du JSON
                 let resultat;
 
                 if (err) {
                     resultat = `Une erreur s'est produite lors de l'implémentation du fichier JSON`;
                     console.error(err);
-                    console.log(`errreur`);
                 } else {
-                    resultat = `Le fichier JSON a été modifié avec succès.`;
-                    console.log(`succès`);
+                    resultat = `${newPokemon.nom} a été ajouté avec succès.`;
                 }
-
+                // Envoi du texte d'information à afficher
                 res.send(resultat);
             });
 
         } catch (error) {
-            console.log(`Il y a eu un problème lors de l'envoi du fichier JSON.`);
+            console.log(`Il y a eu un problème lors du traitement de la requête.`);
             res.status(500).send(error);
         }
     });
@@ -169,13 +152,17 @@ app.post('/cartes', (req, res) => {
 
 app.delete('/supprimer/:id', (req, res) => {
     fs.readFile('cartes/pokemonList.json', 'utf8', (err, data) => {
-        if (err) {
+        if (err) {                          // Import du fichier JSON
             console.error('Erreur lors de la lecture du fichier JSON :', err);
             res.status(500).send("Une erreur est survenue lors de la lecture du fichier JSON Pokémon.");
             return;
         }
 
-        try {
+        try {                               // On cherche l'ID en paramètre dans la liste des Pokémons
+            // ----- Le but de ce bout de code est d'éviter les problèmes dans le cas où l'ID d'un pokémon
+            // --------- ne correspond pas à sa position dans le tableau (par exemple, on a 10 éléments
+            // --------- dans le tableau, mais le dernier, suite à des suppressions, a l'ID 12).
+
             const idRecherche = parseInt(req.params.id);
             const cartesPokemon = JSON.parse(data).cartesPokemon;
 
@@ -183,19 +170,18 @@ app.delete('/supprimer/:id', (req, res) => {
                 return carte.id === idRecherche;
             });
 
-            let pokemonEfface;
+            let pokemonEfface;              // Pour pouvoir le retourner en réponse, pour confirmation
             if (index !== -1) {
                 pokemonEfface = cartesPokemon.splice(index, 1);
             }
-
-            console.log(pokemonEfface[0].nom);
-
+            // Le pokémon à effacer a été enlevé de la liste
             const donneesApresSuppression = {
                 "cartesPokemon": cartesPokemon
             };
-
+            // Création des données sous format JSON
             const nouvellesDonneesJSON = JSON.stringify(donneesApresSuppression, null, 2);
 
+            // Écriture dans le JSON
             fs.writeFile("cartes/pokemonList.json", nouvellesDonneesJSON, (err) => {
                 let resultat;
 
@@ -205,7 +191,7 @@ app.delete('/supprimer/:id', (req, res) => {
                 } else {
                     resultat = `${pokemonEfface[0].nom} a été effacé avec succès.`;
                 }
-
+                // Envoi du texte d'information à afficher
                 res.send(resultat);
             });
 
@@ -222,34 +208,32 @@ app.delete('/supprimer/:id', (req, res) => {
 
 app.put('/modifier/:id', (req, res) => {
     fs.readFile('cartes/pokemonList.json', 'utf8', (err, data) => {
-        if (err) {
+        if (err) {                          // Import du fichier JSON
             console.error('Erreur lors de la lecture du fichier JSON :', err);
             res.status(500).send("Une erreur est survenue lors de la lecture de l'objet JSON Pokémon.");
             return;
         }
 
         try {
-            const idRecherche = parseInt(req.params.id);
-            const cartesPokemon = JSON.parse(data).cartesPokemon;
+            const idRecherche = parseInt(req.params.id);            // ID du pokémon à modifier
+            const cartesPokemon = JSON.parse(data).cartesPokemon;   // Extraction de la liste des Pokémons
 
-            var index = cartesPokemon.findIndex(function (carte) {
+            var index = cartesPokemon.findIndex(function (carte) {  // Récupération de l'ID du Pokémon
                 return carte.id === idRecherche;
             });
 
             let etat = verifierEntree(req.body);   // Utilisation de Joi pour valider le formulaire
 
-            if (etat == false) {
-                console.log(`mauvaise saisie`);
-                res.status(400).send(`Votre formulaire n'est pas valide`);
+            if (etat == false) {                    // Si Joi invalide
+                res.send(`Votre modification n'est pas valide`);
                 return;
             }
 
-            cartesPokemon[index] = req.body;
+            cartesPokemon[index] = req.body;        // Actualisation du tableau avec les données de la req
 
             const donneesApresModification = {
                 "cartesPokemon": cartesPokemon
-            };
-
+            };                                      // Création des données sous format JSON
             const nouvellesDonneesJSON = JSON.stringify(donneesApresModification, null, 2);
 
             fs.writeFile("cartes/pokemonList.json", nouvellesDonneesJSON, (err) => {
@@ -261,7 +245,7 @@ app.put('/modifier/:id', (req, res) => {
                 } else {
                     resultat = `La modification de ${req.body.nom} a été effectuée avec succès.`;
                 }
-
+                // Envoi du texte d'information à afficher
                 res.send(resultat);
             });
 
@@ -272,5 +256,39 @@ app.put('/modifier/:id', (req, res) => {
     });
 });
 
+// **********************************************************************************************************
+// ********************************************** FONCTIONS *************************************************
+// **********************************************************************************************************
+
+// ----- Fonction pour vérifier la validité de l'entrée
+function verifierEntree(entree) {
+    const schema = Joi.object({
+        id: Joi.number().required(),
+        nom: Joi.string().min(3).max(25).required(),
+        type: Joi.string().min(3).required(),
+        imageSrc: Joi.string().min(10).required()
+    });
 
 
+    let result = (schema.validate(entree));
+
+    if (result.error ||     // Éviter les entrées de code XSS
+        entree.nom !== escapeHtml(entree.nom) ||
+        entree.type !== escapeHtml(entree.type) ||
+        entree.imageSrc !== escapeHtml(entree.imageSrc)) {
+        return false;
+    }
+}
+
+// ----- Fonction pour échapper les entrées de code
+function escapeHtml(text) {
+    var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+
+    return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+}

@@ -3,6 +3,16 @@
 const url = "http://localhost:3000";
 
 // ******************************************************************************************************************
+// ***************************************** REMPLSSAGE DU MENU DÉROULANT *******************************************
+// ******************************************************************************************************************
+
+let menuDeroulant = document.querySelector('#type');
+
+afficherTypes(menuDeroulant);
+
+
+
+// ******************************************************************************************************************
 // ******************************************** AFFICHAGE DES POKEMON ***********************************************
 // ******************************************************************************************************************
 
@@ -70,7 +80,7 @@ formulaireAjout.addEventListener('submit', (e) => {
 
     const formData = {
         "nom": `${nomAjout.value}`,
-        "type": `${typeAjout.value}`,
+        "type": `${typeAjout.selectedOptions[0].textContent}`,
         "image": `${imageAjout.value}`
     };
 
@@ -84,12 +94,10 @@ formulaireAjout.addEventListener('submit', (e) => {
         data: JSON.stringify(formData),
         dataType: "json",
         success: (result) => {
-            console.log('oui'); // SUPPRIMER DES RESOLUTION DU PROBLEME
             alert(result);
             console.log(result);
         },
         error: (xhr, status, error) => {
-            console.log('non'); // SUPPRIMER DES RESOLUTION DU PROBLEME
             alert(xhr.responseText);
             location.reload();
         }
@@ -130,7 +138,7 @@ function ajouterEcouteursSuppression() {
 // ******************************************************************************************************************
 
 
-function ajouterEcouteursModification() {
+function ajouterEcouteursModification(table) {
     const tousBoutonsModification = document.querySelectorAll('.afficherModifications');
 
     tousBoutonsModification.forEach(bouton => {
@@ -142,8 +150,18 @@ function ajouterEcouteursModification() {
             const ligneFormulaireModification = document.querySelector(`#ligneFormulaireModification${idAModifier}`);
             ligneFormulaireModification.classList.remove('d-none');
 
+            const nouveauTypeSelect = document.querySelector(`select[name="newType${idAModifier}"]`);
+
+            for (let index = 0; index < table.length; index++) {
+                const element = table[index];
+
+                if (element.id === idAModifier) {
+                    let typeActuel = element.type;
+                    afficherTypes(nouveauTypeSelect, typeActuel);
+                }
+            }
+
             const formulaire = document.querySelector(`#formulaireModification${idAModifier}`);
-            console.log(`Vous avez choisi le formulaire vers ${formulaire.action}`);
 
             formulaire.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -151,7 +169,7 @@ function ajouterEcouteursModification() {
                 console.log(`Formulaire n°${idAModifier} envoyé`);
 
                 const nouveauNom = document.querySelector(`input[name="newName${idAModifier}"]`).value;
-                const nouveauType = document.querySelector(`input[name="newType${idAModifier}"]`).value;
+                const nouveauType = nouveauTypeSelect.selectedOptions[0].textContent;
                 const nouvelleImage = document.querySelector(`input[name="newImage${idAModifier}"]`).value;
 
                 const pokemonModifie = JSON.stringify({
@@ -194,7 +212,39 @@ function ajouterEcouteursModification() {
 // ************************************************** FONCTIONS *****************************************************
 // ******************************************************************************************************************
 
+// ----- Fonction pour afficher les types dans les menus déroulants
+function afficherTypes(balise, type) {
 
+    $.ajax({
+        type: "GET",
+        url: `${url}/typesPokemon`,
+        data: "data",
+        dataType: "json",
+        success: (data) => {
+            balise.innerHTML = `<option>Ouvrez le menu déroulant</option>`;
+            const listeTypes = data.types;
+            listeTypes.sort();
+
+            for (let index = 0; index < listeTypes.length; index++) {
+                const element = listeTypes[index];
+
+                if (element === type) {
+                    balise.innerHTML += `<option value="${index}" selected>${element}</option>`;
+                } else {
+                    balise.innerHTML += `<option value="${index}">${element}</option>`;
+                }
+            }
+        },
+        error: () => {
+            alert(`Il y a eu un problème lors du chargement de la liste des types.`);
+        }
+    });
+
+    balise.addEventListener('click', () => {
+        let premierElement = balise.querySelector(':first-child');
+        premierElement.setAttribute('disabled', '');
+    });
+}
 
 // ----- Fonction pour afficher un array de Pokemons
 function afficher(table) {
@@ -216,27 +266,34 @@ function afficher(table) {
                     </form>
                 </th>
             </tr>
-            <tr id="ligneFormulaireModification${element.id}" class="d-none"><th>
-                <form id="formulaireModification${element.id}" action="/modifier/${element.id}" method="POST">
+            <tr id="ligneFormulaireModification${element.id}" class="d-none">
+                <th>
+                    <form id="formulaireModification${element.id}" action="/modifier/${element.id}" method="POST">
                         <label for="newName${element.id}">Nouveau nom</label>
                         <input name="newName${element.id}" value="${element.nom}">
                         <label for="newType${element.id}">Nouveau type</label>
-                        <input name="newType${element.id}" value="${element.type}">
+                        <select class="form-select" 
+                            aria-label="Default select example" 
+                            id="newType${element.id}" 
+                            name="newType${element.id}" 
+                            required>
+                        </select>
                         <label for="newImage${element.id}">Lien URL vers nouvelle image</label>
                         <input name="newImage${element.id}" value="${element.imageSrc}">
                         <button type="submit">Envoyer</button>
-                        <th>
-                        <button id="annuler${element.id}">Annuler</button>
+                    </form>
+                </th>
+                <th>
+                            <button id="annuler${element.id}">Annuler</button>
                         </th>
                         <th></th>
                         <th></th>
-                    </th>
-                </form>
             </tr>`;
+
+
     });
 
 
-    ajouterEcouteursSuppression();
-    ajouterEcouteursModification();
-
+    ajouterEcouteursSuppression(table);
+    ajouterEcouteursModification(table);
 }

@@ -1,0 +1,22 @@
+{
+    "types": [
+        "Normal",
+        "Feu",
+        "Eau",
+        "Électrique",
+        "Plante",
+        "Glace",
+        "Combat",
+        "Poison",
+        "Sol",
+        "Vol",
+        "Psy",
+        "Insecte",
+        "Roche",
+        "Spectre",
+        "Dragon",
+        "Ténèbres",
+        "Acier",
+        "Fée"
+    ]
+}
