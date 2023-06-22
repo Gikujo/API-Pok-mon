@@ -54,6 +54,14 @@ app.get('/image', (req, res) => {
     res.sendFile(path.join(__dirname, 'image', 'pokeball.png'));
 });
 
+// Envoyer les icones
+app.get('/images/icon-small', (req, res) => {
+    res.sendFile(path.join(__dirname, 'images', 'pokeball-16x16.png'));
+});
+app.get('/images/icon-medium', (req, res) => {
+    res.sendFile(path.join(__dirname, 'images', 'pokeball-32x32.png'));
+});
+
 
 // **********************************************************************************************************
 // ***************************************** AFFICHER UN POKEMON ********************************************
