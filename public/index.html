@@ -16,45 +16,50 @@
 
 <body>
 
-  <body>
-    <h1>API Cartes Pokemon</h1>
+  <div id="bg-filter">
+    <h1 class="text-center my-3">API Pokémon</h1>
 
-    <h2>Ajouter une nouvelle carte Pokemon</h2>
-    <form action="../cartes" name="addPoke" method="POST" id="formulaireAjout">
-      <label for="nom">Nom</label>
-      <input type="text" id="nom" name="nom" required />
+    <div id="formulaires" class="row my-5 col-10 offset-1">
+      <div id="div-ajout" class="col-lg-5 col-10 offset-1 mr-3">
+        <h2 class="text-center">Ajouter une nouvelle carte Pokemon</h2>
+        <form action="../cartes" name="addPoke" method="POST" id="formulaireAjout" class="mt-4">
+          <div id="nom-div" class="row col-6 offset-3">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" required />
+          </div>
+          <div id="type-div" class="row col-6 offset-3 my-3">
+            <label for="type">Type</label>
+            <!-- <input type="text" id="type" name="type" required /> -->
+            <select class="form-select" aria-label="Default select example" id="type" name="type" required>
+              <option>Ouvrez le menu déroulant</option>
+              <option value="1">One</option>
+            </select>
+          </div>
 
-      <label for="type">Type</label>
-      <!-- <input type="text" id="type" name="type" required /> -->
-      <select class="form-select" aria-label="Default select example" id="type" name="type" required>
-        <option>Ouvrez le menu déroulant</option>
-        <option value="1">One</option>
-      </select>
+          <div id="image-div" class="row col-6 offset-3">
+            <label for="imageSrc">Image URL</label>
+            <input type="text" id="imageSrc" name="imageSrc" required />
 
-      <label for="imageSrc">Image URL</label>
-      <input type="text" id="imageSrc" name="imageSrc" required />
+            <button type="submit" class="btn btn-primary mt-2">Ajouter</button>
+          </div>
+        </form>
+      </div>
 
-      <button type="submit">Ajouter</button>
-    </form>
+      <div id="div-recherche" class="col-lg-5 col-10 offset-1 offset-lg-0 ml-3">
+        <h2 class="text-center">Afficher une carte Pokemon spécifique</h2>
+        <form action="/cartes/" name="onePoke" method="GET" id="formulaireCarte" class="mt-4">
+          <div id="nom-recherche-div" class="row col-6 offset-3">
+            <label for="nomCarte">Nom</label>
+            <input type="text" id="nomCarte" name="nom" />
+            <button type="submit" class="btn btn-primary mt-2" id="afficher">Afficher</button>
+          </div>
 
-    <h2>Afficher une carte Pokemon spécifique</h2>
-    <form action="/cartes/" name="onePoke" method="GET" id="formulaireCarte">
-      <label for="nomCarte">Nom</label>
-      <input type="text" id="nomCarte" name="nom" />
-
-      <button type="submit" id="afficher">Afficher</button>
-    </form>
+        </form>
+      </div>
+    </div>
 
     <h2>Liste des cartes Pokemon existantes</h2>
     <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Type</th>
-          <th>Image</th>
-          <th>action</th>
-        </tr>
-      </thead>
       <tbody id="pokemonList">
       </tbody>
     </table>
@@ -62,7 +67,7 @@
     <div class="error-message"></div>
     <script src="http://localhost:3000/script"></script>
 
-
-  </body>
+  </div>
+</body>
 
 </html>

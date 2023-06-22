@@ -1,3 +1,21 @@
+body,
+html {
+    width: 98vw;
+}
+
+body {
+    background: url(http://localhost:3000/image) top no-repeat fixed;
+    background-size: 60%;
+    opacity: 1;
+}
+
+#bg-filter {
+    z-index: -1;
+    width: 100%;
+    height: max-content;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
 th {
     width: 5vw;
     padding: 10px;
@@ -6,4 +24,20 @@ th {
 th img {
     max-width: 5vw;
     max-height: 8vw;
+}
+
+tr {
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.modifier-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    background: transparent;
 }

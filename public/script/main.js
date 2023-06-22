@@ -251,18 +251,18 @@ function afficher(table) {
 
     table.forEach(element => {
         tableau.innerHTML +=
-            `<tr>
+            `<tr class="pokemon-case col-lg-4 col-6 p-5">
                 <th>${element.nom}</th>
-                <th>${element.type}</th>
+                <th class="text-center">Type :<br>${element.type}</th>
                 <th><img src="${element.imageSrc}"></th>
                 <th>
-                    <div >
+                    <div class="margin-auto modifier-div">
                         <button class="afficherModifications" id="modifier${element.id}">Éditer</button>
                     </div>
                     <form action="/supprimer/${element.id}" 
                     method="DELETE" 
-                    class="formulaireSuppression">
-                        <button type="submit">Supprimer</button>
+                    class="formulaireSuppression m-auto">
+                        <button type="submit" class="m-auto">Supprimer</button>
                     </form>
                 </th>
             </tr>

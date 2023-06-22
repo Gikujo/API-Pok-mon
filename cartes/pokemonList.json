@@ -251,6 +251,36 @@
       "nom": "Nosferalto",
       "type": "Ténèbres",
       "imageSrc": "https://img.pokemondb.net/artwork/large/golbat.jpg"
+    },
+    {
+      "id": 44,
+      "nom": "Mystherbe",
+      "type": "Plante",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/oddish.jpg"
+    },
+    {
+      "id": 45,
+      "nom": "Ortésia",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/gloom.jpg"
+    },
+    {
+      "id": 46,
+      "nom": "Raflesia",
+      "type": "Poison",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/vileplume.jpg"
+    },
+    {
+      "id": 47,
+      "nom": "Paras",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/paras.jpg"
+    },
+    {
+      "id": 48,
+      "nom": "Parasect",
+      "type": "Insecte",
+      "imageSrc": "https://img.pokemondb.net/artwork/large/parasect.jpg"
     }
   ]
 }

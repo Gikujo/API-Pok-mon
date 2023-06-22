@@ -49,6 +49,10 @@ app.get('/typesPokemon', (req, res) => {
     res.sendFile(path.join(__dirname, 'typesPokemon', 'typesPokemon.json'));
 });
 
+// Envoyer le fichier image
+app.get('/image', (req, res) => {
+    res.sendFile(path.join(__dirname, 'image', 'pokeball.png'));
+});
 
 
 // **********************************************************************************************************
@@ -96,6 +100,14 @@ app.post('/cartes', (req, res) => {
 
         try {
             let cartesPokemon = JSON.parse(data).cartesPokemon;
+
+            cartesPokemon.forEach(element => {
+                if (element.nom === req.body.nom) {
+                    res.status(400).send(`Ce pokémon existe déjà, vous l'aurez donc en doublon.`);
+                    return;
+                }
+            });
+
             let idNouveauPokemon;
             // Attribution de l'ID du nouveau Pokémon
             if (cartesPokemon.length == 0) {
@@ -111,7 +123,9 @@ app.post('/cartes', (req, res) => {
                 "imageSrc": req.body.image
             };
 
-            let etat = verifierEntree(newPokemon);// Utilisation de Joi pour valider le formulaire
+
+
+            let etat = verifierEntree(newPokemon, cartesPokemon);// Utilisation de Joi pour valider le formulaire
             if (etat === false) {
                 res.status(400).send(`Votre formulaire n'est pas valide`);
                 return;                     // Si erreur, on arrête la requête
@@ -233,7 +247,9 @@ app.put('/modifier/:id', (req, res) => {
 
             const donneesApresModification = {
                 "cartesPokemon": cartesPokemon
-            };                                      // Création des données sous format JSON
+            };
+
+            // Création des données sous format JSON
             const nouvellesDonneesJSON = JSON.stringify(donneesApresModification, null, 2);
 
             fs.writeFile("cartes/pokemonList.json", nouvellesDonneesJSON, (err) => {
@@ -264,8 +280,8 @@ app.put('/modifier/:id', (req, res) => {
 function verifierEntree(entree) {
     const schema = Joi.object({
         id: Joi.number().required(),
-        nom: Joi.string().min(3).max(25).required(),
-        type: Joi.string().min(3).required(),
+        nom: Joi.string().regex(/^[a-zA-ZéèêîôûàçÉÈÊÎÔÛÀÇïÏöÖüû]+$/).min(3).max(25).required(),
+        type: Joi.string().regex(/^[a-zA-ZéèêîôûàçÉÈÊÎÔÛÀÇïÏöÖüû]+$/).min(3).required(),
         imageSrc: Joi.string().min(10).required()
     });
 
